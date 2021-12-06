@@ -26,7 +26,15 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  if ((user.pro === false && user.todos.length < 10) || user.pro === true) {
+    return next();
+  }
+
+  return response.status(403).json({
+    error: 'User not availability to create todos'
+  });
 }
 
 function checksTodoExists(request, response, next) {
